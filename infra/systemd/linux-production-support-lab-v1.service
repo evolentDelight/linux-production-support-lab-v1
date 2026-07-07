@@ -1,0 +1,20 @@
+[Unit]
+Description=Linux Production Support Lab v1 Node.js Service
+Documentation=https://github.com/evolentDelight/linux-production-support-lab-v1
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=prodapp
+Group=prodapp
+WorkingDirectory=/opt/linux-production-support-lab-v1/app
+EnvironmentFile=/etc/linux-production-support-lab-v1/app.env
+ExecStart=/usr/bin/node /opt/linux-production-support-lab-v1/app/src/server.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
