@@ -1,22 +1,25 @@
 const express = require("express");
+const config = require("./config");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-const SERVICE_NAME = process.env.SERVICE_NAME || "linux-production-support-lab";
-
 app.get("/", (req, res) => {
   res.json({
-    service: SERVICE_NAME,
+    service: config.serviceName,
     message: "Production Support Lab API",
-    status: "running"
+    status: "running",
+    environment: config.appEnv,
+    version: config.appVersion
   });
 });
 
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "ok",
-    service: SERVICE_NAME,
+    service: config.serviceName,
+    environment: config.appEnv,
+    version: config.appVersion,
+    uptimeSeconds: Math.round(process.uptime()),
     timestamp: new Date().toISOString()
   });
 });
@@ -34,6 +37,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`[INFO] ${SERVICE_NAME} listening on port ${PORT}`);
+app.listen(config.port, () => {
+  console.log(`[INFO] ${config.serviceName} listening on port ${config.port} in ${config.appEnv} mode`);
 });
