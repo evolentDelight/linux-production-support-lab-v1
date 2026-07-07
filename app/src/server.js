@@ -69,6 +69,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(config.port, () => {
-  console.log(`[INFO] ${config.serviceName} listening on port ${config.port} in ${config.appEnv} mode`);
+app.listen(config.port, config.host, () => {
+  console.log(`[INFO] ${config.serviceName} listening on ${config.host}:${config.port} in ${config.appEnv} mode`);
 });

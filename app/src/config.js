@@ -7,6 +7,7 @@ if (Number.isNaN(port) || port <=0 || port > 65535){
 
 const config = {
   port,
+  host: process.env.HOST || "127.0.0.1",
   serviceName: process.env.SERVICE_NAME || "linux-production-support-lab-v1",
   appEnv: process.env.APP_ENV || "development",
   appVersion: process.env.APP_VERSION || "v1.0.0",
