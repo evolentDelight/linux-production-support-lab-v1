@@ -10,7 +10,8 @@ const config = {
   serviceName: process.env.SERVICE_NAME || "linux-production-support-lab-v1",
   appEnv: process.env.APP_ENV || "development",
   appVersion: process.env.APP_VERSION || "v1.0.0",
-  logLevel: process.env.LOG_LEVEL || "info"
+  logLevel: process.env.LOG_LEVEL || "info",
+  databaseUrl: process.env.DATABASE_URL || ""
 }
 
 module.exports = config;
