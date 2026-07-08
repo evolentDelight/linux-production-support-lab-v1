@@ -12,6 +12,7 @@ const config = {
   appEnv: process.env.APP_ENV || "development",
   appVersion: process.env.APP_VERSION || "v1.0.0",
   logLevel: process.env.LOG_LEVEL || "info",
+  logDir: process.env.LOG_DIR || '/var/log/linux-production-support-lab-v1',
   databaseUrl: process.env.DATABASE_URL || ""
 }
 

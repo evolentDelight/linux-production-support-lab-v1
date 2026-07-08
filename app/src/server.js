@@ -1,8 +1,29 @@
 const express = require("express");
 const config = require("./config");
 const db = require('./db');
+const logger = require('./logger');
 
 const app = express();
+
+app.use(express.json());
+
+app.use((req, res, next) =>{
+  const start = Date.now();
+
+  res.on('finish', () => {
+    const durationMs = Date.now() - start;
+
+    logger.info('request completed', {
+      method: req.method,
+      path: req.originalUrl,
+      statusCode: res.statusCode,
+      durationMs,
+      remoteAddress: req.ip
+    })
+  })
+
+  next();
+})
 
 app.get("/", (req, res) => {
   res.json({
@@ -61,6 +82,13 @@ app.get("/error", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  logger.error('request failed', {
+    method: req.method,
+    path: req.originalUrl,
+    errorMessage: err.message,
+    stack: err.stack
+  })
+
   console.error(`[ERROR] ${new Date().toISOString()} - ${err.message}`);
 
   res.status(500).json({
@@ -70,5 +98,9 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(config.port, config.host, () => {
+  logger.info('service started', {
+    host: config.host,
+    port: config.port
+  })
   console.log(`[INFO] ${config.serviceName} listening on ${config.host}:${config.port} in ${config.appEnv} mode`);
 });

@@ -1,0 +1,9 @@
+/var/log/linux-production-support-lab-v1/*.log {
+  daily
+  rotate 7
+  compress
+  delay compress
+  missingok
+  notifempty
+  create 0640 prodapp prodapp
+}
