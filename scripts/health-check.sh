@@ -15,24 +15,28 @@ check_endpoint() {
   local name="$1"
   local url="$2"
   local response
+  local response_preview
   local http_code
   local body
+  local body_preview
   
   response="$(curl -sS --max-time 5 --write-out $'\n%{http_code}' "$url" 2>&1)" || {
-    echo "${name}=curl_failed message=\"${response}\""
+    response_preview="$(printf "%s" "$response" | tr '\r\n' ' ' | cut -c 1-200)"
+    echo "${name}=curl_failed message=\"${response_preview}\""
     return 1
   }
 
   http_code="$(printf "%s\n" "$response" | tail -n 1)"
   body="$(printf "%s\n" "$response" | sed '$d')"
+  body_preview="$(printf "%s" "$body" | tr '\r\n' ' ' | cut -c 1-200)"
 
   if [[ "$http_code" != "200" ]]; then
-    echo "${name}=bad_http_status http_code=${http_code} body=\"${body}\""
+    echo "${name}=bad_http_status http_code=${http_code} body_preview=\"${body_preview}\""
     return 1
   fi
 
   if ! grep -q '"status":"ok"' <<< "$body"; then
-    echo "${name}=bad_health_body body=\"${body}\""
+    echo "${name}=bad_health_body body_preview=\"${body_preview}\""
     return 1
   fi
 
