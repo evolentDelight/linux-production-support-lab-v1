@@ -1,0 +1,12 @@
+[Unit]
+Description=Linux Production SUpport Lab v1 Health Check
+After=network.target nginx.service linux-production-support-lab-v1.service postgresql.service
+Wants=linux-production-support-lab-v1.service
+
+[Service]
+Type=oneshot
+User=prodapp
+Group=prodapp
+Environnment=APP_URL=http://localhost/health
+Environment=DB_URL=http://localhost/db-health
+ExecStart=/opt/linux-production-support-lab-v1/scripts/health-check.sh
