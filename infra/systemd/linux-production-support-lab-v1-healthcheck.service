@@ -1,7 +1,6 @@
 [Unit]
-Description=Linux Production SUpport Lab v1 Health Check
-After=network.target nginx.service linux-production-support-lab-v1.service postgresql.service
-Wants=linux-production-support-lab-v1.service
+Description=Linux Production Support Lab v1 Health Check
+After=network.target
 
 [Service]
 Type=oneshot
