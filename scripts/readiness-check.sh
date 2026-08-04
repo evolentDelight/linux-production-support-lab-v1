@@ -439,6 +439,7 @@ check_document "${DOCS_DIR}/monitoring.md"
 check_document "${DOCS_DIR}/troubleshooting-drills.md"
 check_document "${DOCS_DIR}/production-readiness-checklist.md"
 check_document "${DOCS_DIR}/runbook.md"
+check_document "${DOCS_DIR}/postmortems/nginx-port-mismatch.md"
 
 section "Summary"
 
